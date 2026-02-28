@@ -11,12 +11,26 @@ module.exports = {
     clean: true,
   },
 
+  // Настройки dev-сервера
+  devServer: {
+    static: {
+      directory: path.join(__dirname, 'dist'),
+    },
+    port: 8080,
+    open: true,
+    hot: true,
+    compress: true,
+    historyApiFallback: true,
+  },
+
   module: {
     rules: [
       {
         test: /\.css$/i,
         use: [
-          MiniCssExtractPlugin.loader,
+          process.env.NODE_ENV === 'production'
+            ? MiniCssExtractPlugin.loader
+            : 'style-loader',
           'css-loader',
         ],
       },
